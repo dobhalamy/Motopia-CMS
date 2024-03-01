@@ -1,0 +1,50 @@
+image: node:12.22.1
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Remove & Git Clone
+          script:
+            - pipe: atlassian/ssh-run:0.2.3
+              variables:
+                SSH_USER: $USER
+                SERVER: $HOST
+                COMMAND: 'cd ../../var/www && rm -r -f motopia-admin/ && git clone git@bitbucket.org:motopiaxfyutura/motopia-admin.git'
+      - step:
+          name: Build the static
+          script:
+            - pipe: atlassian/ssh-run:0.2.3
+              variables:
+                SSH_USER: $USER
+                SERVER: $HOST
+                COMMAND: 'cd ../../var/www/motopia-admin && npm install && npm run build'
+      - step:
+          name: Deployment to domain
+          deployment: production
+          script:
+            - pipe: atlassian/ssh-run:0.2.3
+              variables:
+                SSH_USER: $USER
+                SERVER: $HOST
+                COMMAND: 'cd ../../var/www/motopia-admin/build && \cp -R * /home/gomotopia/admin.gomotopia.com'
+    release/staging:
+      - step:
+          name: Creating artifact
+          script:
+            - git archive --format=tar.gz release/staging -o app.tar.gz
+          artifacts:
+            - app.tar.gz
+      - step:
+          name: Deployment to domain
+          deployment: staging
+          caches:
+            - node
+          script:
+            - pipe: atlassian/heroku-deploy:1.2.1
+              variables:
+                HEROKU_API_KEY: $HEROKU_API_KEY
+                HEROKU_APP_NAME: $HEROKU_APP_NAME
+                ZIP_FILE: app.tar.gz
+          
+          

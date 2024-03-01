@@ -1,0 +1,29 @@
+.editor {
+  font-family: 'Campton';
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  cursor: text;
+  padding: 16px;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+  box-shadow: inset 0px 1px 8px -3px #ABABAB;
+  background: #fff;
+}
+
+.editor :global(.public-DraftEditor-content) {
+  min-height: 480px;
+  color: #4E4E51;
+}
+
+.editor h1 {
+  font-family: 'Campton';
+  margin: 0;
+}
+.editor h2 {
+  font-family: 'Campton';
+  margin: 0;
+}
+.editor h3 {
+  font-family: 'Campton';
+  margin: 0;
+}

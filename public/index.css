@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'Campton';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('./fonts/camptonBook.woff') format('woff'), url('./fonts/camptonMedium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Campton SemiBold';
+  font-style: normal;
+  font-display: swap;
+  src: url('./fonts/CamptonSemiBold.woff') format('woff');
+}
